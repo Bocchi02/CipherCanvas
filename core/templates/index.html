@@ -12,6 +12,14 @@
       rel="stylesheet"
     />
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="{% static 'core/css/index.css' %}" />
   </head>
   <body>
@@ -36,10 +44,10 @@
               <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#encode">Encode</a>
+              <a class="nav-link" href="encode">Encode</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#decode">Decode</a>
+              <a class="nav-link" href="decode">Decode</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#verify">Verify</a>
@@ -65,8 +73,8 @@
           hashing. Keep your secrets hidden in plain sight.
         </p>
         <div class="hero-buttons">
-          <a href="#encode" class="btn-primary-custom">Start Encoding</a>
-          <a href="#decode" class="btn-secondary-custom">Reveal Message</a>
+          <a href="encode" class="btn-primary-custom">Start Encoding</a>
+          <a href="decode" class="btn-secondary-custom">Reveal Message</a>
         </div>
       </div>
     </section>
@@ -124,7 +132,7 @@
           Start using CipherCanvas today. Encrypt, hide, and protect your
           messages with advanced steganography and SHA-256 verification.
         </p>
-        <a href="#encode" class="btn-primary-custom">Get Started Now</a>
+        <a href="encode" class="btn-primary-custom">Get Started Now</a>
       </div>
     </section>
 

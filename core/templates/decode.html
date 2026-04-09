@@ -1,0 +1,166 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decode Message - CipherCanvas</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="{% static 'core/css/index.css' %}" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand" href="/">CipherCanvas</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/encode">Encode</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Decode</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#verify">Verify</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- DECODE SECTION -->
+    <section class="decode-section">
+      <div class="container-custom">
+        <div class="decode-header">
+          <h1>Decode Your Message</h1>
+          <p>Extract hidden messages from steganographic images</p>
+        </div>
+
+        <div class="decode-form-container">
+          <form method="post" enctype="multipart/form-data" class="decode-form">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="image" class="form-label"
+                >Select Steganographic Image</label
+              >
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                required
+                class="form-control-file"
+              />
+              <small class="form-text"
+                >Upload the image containing the hidden message</small
+              >
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary-custom">
+                Decode Message
+              </button>
+              <a href="/" class="btn-secondary-custom">Back to Home</a>
+            </div>
+          </form>
+
+          <div class="result-section">
+            <h3>Decoded Message</h3>
+            <div class="message-result">
+              <div id="messageDisplay" class="message-placeholder">
+                <div class="message-icon">🔓</div>
+                <p>Decoded message will appear here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="image-preview-section">
+          <h3>Image Preview</h3>
+          <div class="image-preview">
+            <img
+              id="imagePreview"
+              src="#"
+              alt="Image Preview"
+              style="display: none"
+            />
+            <div class="preview-placeholder">
+              <div class="preview-icon">🖼️</div>
+              <p>Image preview will appear here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">CipherCanvas</div>
+        <div class="footer-tagline">Secure Steganography System</div>
+        <div class="footer-divider"></div>
+        <div class="footer-text">
+          © 2026 CipherCanvas. All rights reserved. | Built with security in
+          mind.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'core/js/main.js' %}"></script>
+    <script>
+      // Image preview functionality
+      document.getElementById("image").addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById("imagePreview");
+        const placeholder = document.querySelector(".preview-placeholder");
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+            placeholder.style.display = "none";
+          };
+          reader.readAsDataURL(file);
+        } else {
+          preview.style.display = "none";
+          placeholder.style.display = "flex";
+        }
+      });
+    </script>
+  </body>
+</html>
