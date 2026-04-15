@@ -19,3 +19,9 @@ def decode(request):
     #     decoded_text = caesar_decipher(text, shift)
     #     return render(request, 'index.html', {'decoded_text': decoded_text})
     return render(request, 'decode.html')
+
+def verify(request):
+    return render(request, 'verify.html')
+
+def about(request):
+    return render(request, 'about.html')
