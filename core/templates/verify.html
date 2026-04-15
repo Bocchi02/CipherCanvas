@@ -6,11 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verify - CipherCanvas</title>
 
-    <!-- Bootstrap 5 CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "electric-blue": "#7DF9FF",
+              "dark-black": "#000000",
+              "dark-gray": "#1a1a1a",
+            },
+          },
+        },
+      };
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,104 +30,277 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="{% static 'core/css/index.css' %}" />
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .navbar-bg {
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+      }
+    </style>
   </head>
-  <body>
+  <body class="bg-black text-white min-h-screen">
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container-fluid px-4">
-        <a class="navbar-brand" href="/">CipherCanvas</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/encode">Encode</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/decode">Decode</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/verify">Verify</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-          </ul>
+    <nav class="navbar-bg border-b border-gray-800 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center">
+            <a
+              href="/"
+              class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent"
+            >
+              CipherCanvas
+            </a>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-8">
+              <a
+                href="/"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
+                Home
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
+              </a>
+              <a
+                href="/encode"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
+                Encode
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
+              </a>
+              <a
+                href="/decode"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
+                Decode
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
+              </a>
+              <a
+                href="/verify"
+                class="text-electric-blue transition-colors duration-300 relative"
+              >
+                Verify
+                <span
+                  class="absolute bottom-0 left-0 w-full h-0.5 bg-electric-blue"
+                ></span>
+              </a>
+              <a
+                href="/about"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
+                About
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
+              </a>
+            </div>
+          </div>
+          <!-- Mobile menu button -->
+          <div class="md:hidden">
+            <button
+              type="button"
+              class="text-gray-300 hover:text-electric-blue focus:outline-none focus:text-electric-blue"
+            >
+              <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                <path
+                  fill-rule="evenodd"
+                  d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </nav>
 
     <!-- VERIFY SECTION -->
-    <section class="verify-section py-5">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 col-md-10">
-            <div class="verify-card">
-              <h2 class="text-center mb-4">Verify Image Integrity</h2>
-              <p class="text-center text-secondary mb-4">
-                Upload an image and provide the original SHA-256 hash to verify
-                its integrity.
-              </p>
-              <form
-                method="post"
-                enctype="multipart/form-data"
-                class="verify-form"
+    <section class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-dark-gray border border-gray-800 rounded-lg p-8 md:p-12">
+          <div class="text-center mb-8">
+            <h2
+              class="text-3xl sm:text-4xl font-bold mb-4 flex items-center justify-center"
+            >
+              <i
+                class="bx bx-shield-check text-electric-blue mr-3 text-4xl"
+              ></i>
+              Verify Image Integrity
+            </h2>
+            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+              Upload an image and provide the original SHA-256 hash to verify
+              its integrity.
+            </p>
+          </div>
+
+          <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            <div>
+              <label
+                for="image"
+                class="block text-sm font-medium text-gray-300 mb-2"
               >
-                <div class="mb-3">
-                  <label for="image" class="form-label">Select Image</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="image"
-                    name="image"
-                    accept="image/*"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="hash" class="form-label">SHA-256 Hash</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="hash"
-                    name="hash"
-                    placeholder="Enter the original SHA-256 hash"
-                    required
-                  />
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary-custom">
-                    Verify Integrity
-                  </button>
-                </div>
-              </form>
-              <div class="result mt-4">
-                <h4>Verification Result:</h4>
-                <p
-                  class=text-success text-danger"
-                >
+                <i class="bx bx-image mr-2 text-electric-blue"></i>Select Image
+              </label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                required
+                class="w-full px-3 py-3 bg-black border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-electric-blue focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-electric-blue file:text-black hover:file:bg-blue-400"
+              />
+            </div>
+
+            <div>
+              <label
+                for="hash"
+                class="block text-sm font-medium text-gray-300 mb-2"
+              >
+                <i class="bx bx-hash mr-2 text-electric-blue"></i>SHA-256 Hash
+              </label>
+              <input
+                type="text"
+                id="hash"
+                name="hash"
+                placeholder="Enter the original SHA-256 hash"
+                required
+                class="w-full px-3 py-3 bg-black border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-electric-blue focus:border-transparent"
+              />
+            </div>
+
+            <div class="text-center">
+              <button
+                type="submit"
+                class="bg-gradient-to-r from-electric-blue to-blue-400 text-black font-semibold py-3 px-8 rounded-lg hover:shadow-lg hover:shadow-electric-blue/25 transform hover:-translate-y-1 transition-all duration-300"
+              >
+                <i class="bx bx-check-circle mr-2"></i>Verify Integrity
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-8 p-6 bg-black border border-gray-600 rounded-lg">
+            <h4 class="text-lg font-semibold mb-4 flex items-center">
+              <i class="bx bx-info-circle text-electric-blue mr-2"></i>
+              Verification Result:
+            </h4>
+
+            <div class="text-gray-300">
+              {% if error %}
+              <p id="result-text" class="text-red-400">{{ error }}</p>
+
+              {% elif verified is not None %} {% if verified %}
+              <p id="result-text" class="text-green-400">
+                Integrity verified. The SHA-256 hash matches the hidden message.
+              </p>
+              {% else %}
+              <p id="result-text" class="text-red-400">
+                Integrity check failed. The SHA-256 hash does not match the
+                hidden message.
+              </p>
+              {% endif %}
+
+              <div class="mt-4 space-y-2 text-sm">
+                <p>
+                  <strong>Extracted Message:</strong> {{ extracted_message }}
                 </p>
+                <p><strong>Entered Hash:</strong> {{ entered_hash }}</p>
+                <p><strong>Generated Hash:</strong> {{ generated_hash }}</p>
               </div>
+
+              {% else %}
+              <p id="result-text">
+                Upload an image and enter the hash to see verification results.
+              </p>
+              {% endif %}
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FOOTER -->
+    <footer class="bg-dark-gray py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto text-center">
+        <div
+          class="text-2xl font-bold mb-2 bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent"
+        >
+          CipherCanvas
+        </div>
+        <div class="text-gray-400 mb-4">Secure Steganography System</div>
+        <div class="w-16 h-0.5 bg-electric-blue mx-auto mb-4 opacity-50"></div>
+        <div class="text-gray-400 text-sm">
+          © 2026 CipherCanvas. All rights reserved. | Built with security in
+          mind.
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static 'core/js/main.js' %}"></script>
+    <script>
+      // SHA-256 hash calculation for file
+      async function calculateFileHash(file) {
+        const buffer = await file.arrayBuffer();
+        const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+      }
+
+      // Form submission handler
+      document
+        .querySelector("form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const fileInput = document.getElementById("image");
+          const hashInput = document.getElementById("hash");
+          const resultText = document.getElementById("result-text");
+
+          if (!fileInput.files[0]) {
+            resultText.innerHTML =
+              '<span class="text-red-400">Please select an image file.</span>';
+            return;
+          }
+
+          if (!hashInput.value.trim()) {
+            resultText.innerHTML =
+              '<span class="text-red-400">Please enter the SHA-256 hash.</span>';
+            return;
+          }
+
+          try {
+            resultText.innerHTML =
+              '<span class="text-electric-blue">Calculating hash...</span>';
+
+            const fileHash = await calculateFileHash(fileInput.files[0]);
+            const providedHash = hashInput.value.trim().toLowerCase();
+
+            if (fileHash === providedHash) {
+              resultText.innerHTML =
+                '<span class="text-green-400"><i class="bx bx-check-circle mr-2"></i>Verification successful! The image integrity is intact.</span>';
+            } else {
+              resultText.innerHTML =
+                '<span class="text-red-400"><i class="bx bx-x-circle mr-2"></i>Verification failed! The image has been modified or the hash is incorrect.</span>';
+            }
+          } catch (error) {
+            resultText.innerHTML =
+              '<span class="text-red-400">Error during verification: ' +
+              error.message +
+              "</span>";
+          }
+        });
+    </script>
   </body>
 </html>

@@ -1340,3 +1340,192 @@ a:hover {
     font-size: 0.9rem;
   }
 }
+
+/* Result Message Styles */
+.result-message {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-cyan);
+  background: var(--primary-dark);
+  border: 1px solid var(--border-subtle);
+  animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-message.success-message {
+  border-left-color: #00d9ff;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 217, 255, 0.1),
+    rgba(0, 153, 255, 0.05)
+  );
+}
+
+.result-message.error-message {
+  border-left-color: #ff6b6b;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.1),
+    rgba(255, 107, 107, 0.05)
+  );
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.message-icon {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.result-message.success-message .message-icon {
+  color: #00d9ff;
+}
+
+.result-message.error-message .message-icon {
+  color: #ff6b6b;
+}
+
+.message-header h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.message-body {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.message-body p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.hash-label {
+  margin: 1rem 0 0.75rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.hash-container {
+  position: relative;
+  width: 100%;
+}
+
+.hash-input {
+  padding-right: 50px; /* space for the button */
+  background: rgba(0, 217, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  transition: all 0.3s ease;
+  outline: none;
+  cursor: not-allowed;
+}
+
+.hash-input:hover {
+  border-color: rgba(0, 217, 255, 0.35);
+  background: rgba(0, 217, 255, 0.08);
+}
+
+.hash-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(0, 217, 255, 0.1);
+}
+
+.copy-btn-inside {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  background: rgba(0, 217, 255, 0.1);
+  border: 1px solid rgba(0, 217, 255, 0.25);
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+}
+
+.copy-btn-inside:hover {
+  background: rgba(0, 217, 255, 0.15);
+  border-color: rgba(0, 217, 255, 0.4);
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 217, 255, 0.15);
+}
+
+.copy-btn-inside:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.copy-btn-inside.copied {
+  background: rgba(76, 175, 80, 0.15);
+  border-color: rgba(76, 175, 80, 0.35);
+  color: #4caf50;
+}
+
+@media (max-width: 768px) {
+  .result-message {
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .message-header {
+    gap: 0.75rem;
+  }
+
+  .message-icon {
+    font-size: 1.5rem;
+  }
+
+  .message-header h4 {
+    font-size: 1.1rem;
+  }
+
+  .hash-input {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hash-container {
+    gap: 0.5rem;
+  }
+
+  .hash-input {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .copy-btn-inside {
+    padding: 0.4rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+    right: 6px;
+  }
+}
