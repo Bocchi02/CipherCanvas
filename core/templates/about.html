@@ -13,13 +13,13 @@
         theme: {
           extend: {
             colors: {
-              'electric-blue': '#7DF9FF',
-              'dark-black': '#000000',
-              'dark-gray': '#1a1a1a',
-            }
-          }
-        }
-      }
+              "electric-blue": "#7DF9FF",
+              "dark-black": "#000000",
+              "dark-gray": "#1a1a1a",
+            },
+          },
+        },
+      };
     </script>
 
     <!-- Google Fonts -->
@@ -31,11 +31,14 @@
     />
 
     <!-- Boxicons -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
 
     <style>
       body {
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
       }
       .navbar-bg {
         background: rgba(0, 0, 0, 0.95);
@@ -52,39 +55,73 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center">
-            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent">
+            <a
+              href="/"
+              class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent"
+            >
               CipherCanvas
             </a>
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-8">
-              <a href="/" class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group">
+              <a
+                href="/"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
                 Home
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"></span>
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
               </a>
-              <a href="/encode" class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group">
+              <a
+                href="/encode"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
                 Encode
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"></span>
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
               </a>
-              <a href="/decode" class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group">
+              <a
+                href="/decode"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
                 Decode
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"></span>
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
               </a>
-              <a href="/verify" class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group">
+              <a
+                href="/verify"
+                class="text-gray-300 hover:text-electric-blue transition-colors duration-300 relative group"
+              >
                 Verify
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"></span>
+                <span
+                  class="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-blue transition-all duration-300 group-hover:w-full"
+                ></span>
               </a>
-              <a href="#" class="text-electric-blue transition-colors duration-300 relative">
+              <a
+                href="#"
+                class="text-electric-blue transition-colors duration-300 relative"
+              >
                 About
-                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-electric-blue"></span>
+                <span
+                  class="absolute bottom-0 left-0 w-full h-0.5 bg-electric-blue"
+                ></span>
               </a>
             </div>
           </div>
           <!-- Mobile menu button -->
           <div class="md:hidden">
-            <button type="button" class="text-gray-300 hover:text-electric-blue focus:outline-none focus:text-electric-blue">
+            <button
+              type="button"
+              class="text-gray-300 hover:text-electric-blue focus:outline-none focus:text-electric-blue"
+            >
               <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+                <path
+                  fill-rule="evenodd"
+                  d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+                />
               </svg>
             </button>
           </div>
@@ -93,12 +130,22 @@
     </nav>
 
     <!-- ABOUT HERO SECTION -->
-    <section class="hero-bg min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <section
+      class="hero-bg min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8"
+    >
       <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-          About <span class="bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent">CipherCanvas</span>
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+        >
+          About
+          <span
+            class="bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent"
+            >CipherCanvas</span
+          >
         </h1>
-        <p class="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+        <p
+          class="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+        >
           A secure and innovative steganography platform that seamlessly hides
           messages within images using advanced encryption techniques.
         </p>
@@ -110,9 +157,9 @@
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-3xl sm:text-4xl font-bold mb-6">Our Mission</h2>
         <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          To provide a user-friendly, secure, and efficient solution for
-          digital steganography, enabling users to protect sensitive
-          information through innovative image-based encryption.
+          To provide a user-friendly, secure, and efficient solution for digital
+          steganography, enabling users to protect sensitive information through
+          innovative image-based encryption.
         </p>
       </div>
     </section>
@@ -121,47 +168,66 @@
     <section class="bg-black py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">Meet the Developers</h2>
-          <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-            The talented team behind CipherCanvas, dedicated to advancing
-            secure communication technologies.
-          </p>
+          <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+            Meet the Developers
+          </h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Developer 1 -->
-          <div class="bg-dark-gray border border-gray-800 rounded-lg p-8 text-center hover:border-electric-blue transition-all duration-300">
-            <div class="w-20 h-20 bg-gradient-to-r from-electric-blue/20 to-blue-400/20 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold text-electric-blue">
-              D1
+          <div
+            class="bg-dark-gray border border-gray-800 rounded-lg p-8 text-center hover:border-electric-blue transition-all duration-300"
+          >
+            <div
+              class="w-20 h-20 bg-gradient-to-r from-electric-blue/20 to-blue-400/20 rounded-full overflow-hidden flex items-center justify-center mx-auto mb-6 text-2xl font-bold text-electric-blue"
+            >
+              <img
+                src="{% static 'core/img/denzel.png' %}"
+                alt="Denzel"
+                class="w-full h-full rounded-full object-cover"
+              />
             </div>
-            <h3 class="text-xl font-semibold mb-2">Developer 1</h3>
-            <p class="text-electric-blue mb-4">Role/Position</p>
-            <p class="text-gray-300 leading-relaxed">
-              Description of developer 1's contributions and expertise.
+            <h3 class="text-xl font-semibold mb-2">Denzel Napili</h3>
+            <p class="text-electric-blue mb-4">
+              3rd Year BS Information Technology
             </p>
           </div>
 
           <!-- Developer 2 -->
-          <div class="bg-dark-gray border border-gray-800 rounded-lg p-8 text-center hover:border-electric-blue transition-all duration-300">
-            <div class="w-20 h-20 bg-gradient-to-r from-electric-blue/20 to-blue-400/20 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold text-electric-blue">
-              D2
+          <div
+            class="bg-dark-gray border border-gray-800 rounded-lg p-8 text-center hover:border-electric-blue transition-all duration-300"
+          >
+            <div
+              class="w-20 h-20 bg-gradient-to-r from-electric-blue/20 to-blue-400/20 rounded-full overflow-hidden flex items-center justify-center mx-auto mb-6 text-2xl font-bold text-electric-blue"
+            >
+              <img
+                src="{% static 'core/img/filbert.jpg' %}"
+                alt="Filbert"
+                class="w-full h-full rounded-full object-cover"
+              />
             </div>
-            <h3 class="text-xl font-semibold mb-2">Developer 2</h3>
-            <p class="text-electric-blue mb-4">Role/Position</p>
-            <p class="text-gray-300 leading-relaxed">
-              Description of developer 2's contributions and expertise.
+            <h3 class="text-xl font-semibold mb-2">Filbert Gonzales</h3>
+            <p class="text-electric-blue mb-4">
+              3rd Year BS Information Technology
             </p>
           </div>
 
           <!-- Developer 3 -->
-          <div class="bg-dark-gray border border-gray-800 rounded-lg p-8 text-center hover:border-electric-blue transition-all duration-300">
-            <div class="w-20 h-20 bg-gradient-to-r from-electric-blue/20 to-blue-400/20 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold text-electric-blue">
-              D3
+          <div
+            class="bg-dark-gray border border-gray-800 rounded-lg p-8 text-center hover:border-electric-blue transition-all duration-300"
+          >
+            <div
+              class="w-20 h-20 bg-gradient-to-r from-electric-blue/20 to-blue-400/20 rounded-full overflow-hidden flex items-center justify-center mx-auto mb-6 text-2xl font-bold text-electric-blue"
+            >
+              <img
+                src="{% static 'core/img/quides.jpg' %}"
+                alt="Quides"
+                class="w-full h-full rounded-full object-cover"
+              />
             </div>
-            <h3 class="text-xl font-semibold mb-2">Developer 3</h3>
-            <p class="text-electric-blue mb-4">Role/Position</p>
-            <p class="text-gray-300 leading-relaxed">
-              Description of developer 3's contributions and expertise.
+            <h3 class="text-xl font-semibold mb-2">John Lloyd Quides</h3>
+            <p class="text-electric-blue mb-4">
+              3rd Year BS Information Technology
             </p>
           </div>
         </div>
@@ -171,7 +237,9 @@
     <!-- FOOTER -->
     <footer class="bg-dark-gray py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto text-center">
-        <div class="text-2xl font-bold mb-2 bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent">
+        <div
+          class="text-2xl font-bold mb-2 bg-gradient-to-r from-electric-blue to-blue-400 bg-clip-text text-transparent"
+        >
           CipherCanvas
         </div>
         <div class="text-gray-400 mb-4">Secure Steganography System</div>
@@ -182,5 +250,4 @@
       </div>
     </footer>
   </body>
-</html></content>
-<parameter name="filePath">d:\COOOODE\IAS\CipherCanvas\core\templates\about.html
+</html>
