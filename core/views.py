@@ -2,8 +2,11 @@ import os
 from django.shortcuts import render
 from django.conf import settings
 from .forms import EncodeForm
+from .services.cipher import caesar_cipher
 from .services.hashing import generate_sha256, verify_integrity
 from .services.steganography import decode_image, encode_image, extract_message_and_hash
+
+CAESAR_SHIFT = 15
 
 # Create your views here.
 def home(request):
@@ -24,8 +27,9 @@ def encode(request):
             context["error"] = "Secret message must not exceed 1000 characters."
             return render(request, "encode.html", context)
 
-        message_hash = generate_sha256(secret_message)
-        combined_data = f"{secret_message}|||HASH|||{message_hash}"
+        encrypted_message = caesar_cipher(secret_message, CAESAR_SHIFT)
+        message_hash = generate_sha256(encrypted_message)
+        combined_data = f"{encrypted_message}|||HASH|||{message_hash}"
 
         upload_dir = os.path.join(settings.MEDIA_ROOT, "uploads")
         output_dir = os.path.join(settings.MEDIA_ROOT, "encoded")
@@ -65,9 +69,14 @@ def verify(request):
 
     if request.method == "POST":
         uploaded_image = request.FILES.get("image")
+        entered_hash = (request.POST.get("hash") or "").strip().lower()
 
         if not uploaded_image:
             context["error"] = "Please upload an encoded image."
+            return render(request, "verify.html", context)
+
+        if not entered_hash:
+            context["error"] = "Please enter the original SHA-256 hash."
             return render(request, "verify.html", context)
 
         temp_dir = os.path.join(settings.MEDIA_ROOT, "temp")
@@ -79,28 +88,22 @@ def verify(request):
             for chunk in uploaded_image.chunks():
                 destination.write(chunk)
 
-        # Step 1: Extract hidden data
         extracted_data = decode_image(image_path)
 
         if not extracted_data:
             context["error"] = "No hidden data found in the image."
             return render(request, "verify.html", context)
 
-        # Step 2: Split message + hash
         message, stored_hash = extract_message_and_hash(extracted_data)
 
         if not message or not stored_hash:
             context["error"] = "Invalid or corrupted hidden data."
             return render(request, "verify.html", context)
 
-        # Step 3: Verify integrity
-        result = verify_integrity(message, stored_hash)
+        result = verify_integrity(message, entered_hash)
 
         context = {
-            "message": message,
-            "stored_hash": result["stored_hash"],
-            "generated_hash": result["generated_hash"],
-            "is_match": result["is_match"]
+            "verified": result["is_match"],
         }
 
     return render(request, "verify.html", context)

@@ -140,12 +140,17 @@
               Verify Image Integrity
             </h2>
             <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-              Upload an image and provide the original SHA-256 hash to verify
+              Upload an image and provide the SHA-256 hash to verify
               its integrity.
             </p>
           </div>
 
-          <form method="post" enctype="multipart/form-data" class="space-y-6">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{% url 'verify' %}"
+            class="space-y-6"
+          >
             {% csrf_token %}
             <div>
               <label
@@ -175,7 +180,7 @@
                 type="text"
                 id="hash"
                 name="hash"
-                placeholder="Enter the original SHA-256 hash"
+                placeholder="Enter the SHA-256 hash"
                 required
                 class="w-full px-3 py-3 bg-black border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-electric-blue focus:border-transparent"
               />
@@ -210,17 +215,7 @@
                 Integrity check failed. The SHA-256 hash does not match the
                 hidden message.
               </p>
-              {% endif %}
-
-              <div class="mt-4 space-y-2 text-sm">
-                <p>
-                  <strong>Extracted Message:</strong> {{ extracted_message }}
-                </p>
-                <p><strong>Entered Hash:</strong> {{ entered_hash }}</p>
-                <p><strong>Generated Hash:</strong> {{ generated_hash }}</p>
-              </div>
-
-              {% else %}
+              {% endif %} {% else %}
               <p id="result-text">
                 Upload an image and enter the hash to see verification results.
               </p>
@@ -249,58 +244,5 @@
     </footer>
 
     <script src="{% static 'core/js/main.js' %}"></script>
-    <script>
-      // SHA-256 hash calculation for file
-      async function calculateFileHash(file) {
-        const buffer = await file.arrayBuffer();
-        const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-      }
-
-      // Form submission handler
-      document
-        .querySelector("form")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-
-          const fileInput = document.getElementById("image");
-          const hashInput = document.getElementById("hash");
-          const resultText = document.getElementById("result-text");
-
-          if (!fileInput.files[0]) {
-            resultText.innerHTML =
-              '<span class="text-red-400">Please select an image file.</span>';
-            return;
-          }
-
-          if (!hashInput.value.trim()) {
-            resultText.innerHTML =
-              '<span class="text-red-400">Please enter the SHA-256 hash.</span>';
-            return;
-          }
-
-          try {
-            resultText.innerHTML =
-              '<span class="text-electric-blue">Calculating hash...</span>';
-
-            const fileHash = await calculateFileHash(fileInput.files[0]);
-            const providedHash = hashInput.value.trim().toLowerCase();
-
-            if (fileHash === providedHash) {
-              resultText.innerHTML =
-                '<span class="text-green-400"><i class="bx bx-check-circle mr-2"></i>Verification successful! The image integrity is intact.</span>';
-            } else {
-              resultText.innerHTML =
-                '<span class="text-red-400"><i class="bx bx-x-circle mr-2"></i>Verification failed! The image has been modified or the hash is incorrect.</span>';
-            }
-          } catch (error) {
-            resultText.innerHTML =
-              '<span class="text-red-400">Error during verification: ' +
-              error.message +
-              "</span>";
-          }
-        });
-    </script>
   </body>
 </html>

@@ -62,8 +62,32 @@ def decode_image(image_path: str) -> str:
         return ""
     
 def extract_message_and_hash(data: str):
+    # DEBUG: show raw extracted data
+
+    # Verify the data is valid
+    if not data:
+        return None, None
+    
+    if not isinstance(data, str):
+        return None, None
+    
     if "|||HASH|||" not in data:
         return None, None
 
-    message, stored_hash = data.split("|||HASH|||")
-    return message, stored_hash
+    message, stored_hash = data.split("|||HASH|||", 1)
+
+    
+    # Clean hash
+    stored_hash = stored_hash.strip().replace('\x00', '')
+
+    if "|||END|||" in stored_hash:
+        stored_hash = stored_hash.split("|||END|||", 1)[0].strip()
+
+    # Verify both parts are non-empty
+    if not message or not stored_hash:
+        return None, None
+    
+    # Verify hash format
+    if len(stored_hash) != 64 or not all(c in '0123456789abcdefABCDEF' for c in stored_hash):
+        return None, None
+    return message, stored_hash.lower()
