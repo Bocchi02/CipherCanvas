@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.conf import settings
 from .forms import EncodeForm
 from .services.cipher import caesar_cipher
-from .services.hashing import generate_sha256, verify_integrity
-from .services.steganography import decode_image, encode_image, extract_message_and_hash
+from .services.hashing import generate_file_sha256, generate_sha256, verify_file_integrity
+from .services.steganography import encode_image
 
 CAESAR_SHIFT = 15
 
@@ -28,8 +28,8 @@ def encode(request):
             return render(request, "encode.html", context)
 
         encrypted_message = caesar_cipher(secret_message, CAESAR_SHIFT)
-        message_hash = generate_sha256(encrypted_message)
-        combined_data = f"{encrypted_message}|||HASH|||{message_hash}"
+        hidden_message_hash = generate_sha256(encrypted_message)
+        combined_data = f"{encrypted_message}|||HASH|||{hidden_message_hash}"
 
         upload_dir = os.path.join(settings.MEDIA_ROOT, "uploads")
         output_dir = os.path.join(settings.MEDIA_ROOT, "encoded")
@@ -46,9 +46,11 @@ def encode(request):
 
         try:
             encode_image(original_path, combined_data, output_path)
+            file_hash = generate_file_sha256(output_path)
 
             context["success"] = "Message encoded successfully."
-            context["hash_value"] = message_hash
+            context["hash_value"] = file_hash
+            context["message_hash_value"] = hidden_message_hash
             context["encoded_image_url"] = f"{settings.MEDIA_URL}encoded/{output_filename}"
 
         except ValueError as e:
@@ -76,7 +78,7 @@ def verify(request):
             return render(request, "verify.html", context)
 
         if not entered_hash:
-            context["error"] = "Please enter the original SHA-256 hash."
+            context["error"] = "Please enter the encoded image file SHA-256 hash."
             return render(request, "verify.html", context)
 
         temp_dir = os.path.join(settings.MEDIA_ROOT, "temp")
@@ -88,22 +90,12 @@ def verify(request):
             for chunk in uploaded_image.chunks():
                 destination.write(chunk)
 
-        extracted_data = decode_image(image_path)
-
-        if not extracted_data:
-            context["error"] = "No hidden data found in the image."
-            return render(request, "verify.html", context)
-
-        message, stored_hash = extract_message_and_hash(extracted_data)
-
-        if not message or not stored_hash:
-            context["error"] = "Invalid or corrupted hidden data."
-            return render(request, "verify.html", context)
-
-        result = verify_integrity(message, entered_hash)
+        result = verify_file_integrity(image_path, entered_hash)
 
         context = {
             "verified": result["is_match"],
+            "entered_hash": entered_hash,
+            "generated_hash": result["generated_hash"],
         }
 
     return render(request, "verify.html", context)

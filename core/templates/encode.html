@@ -209,24 +209,44 @@
               </div>
               <div>
                 <p class="text-sm font-medium text-gray-300 mb-2">
-                  <strong>Message SHA-256 Hash:</strong>
+                  <strong>Image File SHA-256 Hash:</strong>
                 </p>
                 <p class="text-sm text-yellow-300 mb-3">
                   This SHA-256 hash will only be visible once. Make sure to copy
                   it before leaving this page.
                 </p>
-                <div class="relative">
+                <div class="relative mb-4">
                   <input
                     type="text"
                     class="w-full px-3 py-2 bg-black border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-electric-blue pr-12"
-                    id="hashValue"
+                    id="fileHashValue"
                     value="{{ hash_value }}"
                     readonly
                   />
                   <button
                     type="button"
                     class="absolute right-2 top-2 text-gray-400 hover:text-electric-blue transition-colors"
-                    onclick="copyHash()"
+                    onclick="copyHash('fileHashValue', event)"
+                    title="Copy to clipboard"
+                  >
+                    <i class="bx bx-copy text-xl"></i>
+                  </button>
+                </div>
+                <p class="text-sm font-medium text-gray-300 mb-2">
+                  <strong>Message SHA-256 Hash:</strong>
+                </p>
+                <div class="relative">
+                  <input
+                    type="text"
+                    class="w-full px-3 py-2 bg-black border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-electric-blue pr-12"
+                    id="messageHashValue"
+                    value="{{ message_hash_value }}"
+                    readonly
+                  />
+                  <button
+                    type="button"
+                    class="absolute right-2 top-2 text-gray-400 hover:text-electric-blue transition-colors"
+                    onclick="copyHash('messageHashValue', event)"
                     title="Copy to clipboard"
                   >
                     <i class="bx bx-copy text-xl"></i>
@@ -324,8 +344,8 @@
       });
 
       // Copy hash functionality
-      function copyHash() {
-        const hashElement = document.getElementById("hashValue");
+      function copyHash(hashElementId, event) {
+        const hashElement = document.getElementById(hashElementId);
         const copyBtn = event.target.closest("button");
 
         if (hashElement) {

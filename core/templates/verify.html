@@ -140,7 +140,7 @@
               Verify Image Integrity
             </h2>
             <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-              Upload an image and provide the SHA-256 hash to verify
+              Upload an image and provide the file SHA-256 hash to verify
               its integrity.
             </p>
           </div>
@@ -174,13 +174,14 @@
                 for="hash"
                 class="block text-sm font-medium text-gray-300 mb-2"
               >
-                <i class="bx bx-hash mr-2 text-electric-blue"></i>SHA-256 Hash
+                <i class="bx bx-hash mr-2 text-electric-blue"></i>File SHA-256
+                Hash
               </label>
               <input
                 type="text"
                 id="hash"
                 name="hash"
-                placeholder="Enter the SHA-256 hash"
+                placeholder="Enter the encoded image file SHA-256 hash"
                 required
                 class="w-full px-3 py-3 bg-black border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-electric-blue focus:border-transparent"
               />
@@ -208,14 +209,21 @@
 
               {% elif verified is not None %} {% if verified %}
               <p id="result-text" class="text-green-400">
-                Integrity verified. The SHA-256 hash matches the hidden message.
+                Integrity verified. The SHA-256 hash matches the image file.
               </p>
               {% else %}
               <p id="result-text" class="text-red-400">
                 Integrity check failed. The SHA-256 hash does not match the
-                hidden message.
+                image file.
               </p>
-              {% endif %} {% else %}
+              {% endif %}
+
+              <div class="mt-4 space-y-2 text-sm">
+                <p><strong>Entered Hash:</strong> {{ entered_hash }}</p>
+                <p><strong>Generated File Hash:</strong> {{ generated_hash }}</p>
+              </div>
+
+              {% else %}
               <p id="result-text">
                 Upload an image and enter the hash to see verification results.
               </p>
