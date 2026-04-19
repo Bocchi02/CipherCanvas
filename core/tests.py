@@ -14,6 +14,12 @@ class CaesarCipherTests(SimpleTestCase):
             "Piiprz pi Splc! Otqgp-123",
         )
 
+    def test_caesar_cipher_reverses_shift_by_15(self):
+        self.assertEqual(
+            caesar_cipher("Piiprz pi Splc! Otqgp-123", -15),
+            "Attack at Dawn! Zebra-123",
+        )
+
 
 class FileHashingTests(SimpleTestCase):
     def test_generate_file_sha256_hashes_file_bytes(self):

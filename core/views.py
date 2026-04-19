@@ -4,7 +4,7 @@ from django.conf import settings
 from .forms import EncodeForm
 from .services.cipher import caesar_cipher
 from .services.hashing import generate_file_sha256, generate_sha256, verify_file_integrity
-from .services.steganography import encode_image
+from .services.steganography import decode_image, encode_image, extract_message_and_hash
 
 CAESAR_SHIFT = 15
 
@@ -59,12 +59,56 @@ def encode(request):
     return render(request, "encode.html", context)
 
 def decode(request):
-    # if request.method == 'POST':
-    #     text = request.POST.get('text')
-    #     shift = int(request.POST.get('shift', 0))
-    #     decoded_text = caesar_decipher(text, shift)
-    #     return render(request, 'index.html', {'decoded_text': decoded_text})
-    return render(request, 'decode.html')
+    context = {}
+
+    if request.method == "POST":
+        uploaded_image = request.FILES.get("image")
+        entered_hash = (request.POST.get("sha256") or "").strip().lower()
+
+        if not uploaded_image:
+            context["error"] = "Please upload an encoded image."
+            return render(request, "decode.html", context)
+
+        if not entered_hash:
+            context["error"] = "Please enter the Caesar-encoded message SHA-256 hash."
+            return render(request, "decode.html", context)
+
+        temp_dir = os.path.join(settings.MEDIA_ROOT, "temp")
+        os.makedirs(temp_dir, exist_ok=True)
+
+        image_path = os.path.join(temp_dir, uploaded_image.name)
+
+        with open(image_path, "wb+") as destination:
+            for chunk in uploaded_image.chunks():
+                destination.write(chunk)
+
+        extracted_data = decode_image(image_path)
+
+        if not extracted_data:
+            context["error"] = "No hidden message found in the image."
+            return render(request, "decode.html", context)
+
+        encrypted_message, stored_hash = extract_message_and_hash(extracted_data)
+
+        if not encrypted_message or not stored_hash:
+            context["error"] = "Invalid or corrupted hidden message data."
+            return render(request, "decode.html", context)
+
+        generated_hash = generate_sha256(encrypted_message)
+
+        if entered_hash != stored_hash or entered_hash != generated_hash:
+            context["error"] = "The message SHA-256 hash does not match. The hidden message cannot be extracted."
+            context["entered_hash"] = entered_hash
+            context["generated_hash"] = generated_hash
+            return render(request, "decode.html", context)
+
+        context = {
+            "decoded_message": caesar_cipher(encrypted_message, -CAESAR_SHIFT),
+            "entered_hash": entered_hash,
+            "generated_hash": generated_hash,
+        }
+
+    return render(request, "decode.html", context)
 
 def verify(request):
     context = {}
